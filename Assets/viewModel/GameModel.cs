@@ -72,93 +72,68 @@ public class GameModel
         CurrentPlayer.LstInventory.Add(prItem);
     }
 
-    public static void RemoveItemFromScene(Item prItem)
-    {
-        CurrentPlayer.CurrentScene.SceneObject = null;
-    }
+    //public static void RemoveItemFromScene(Item prItem)
+    //{
+    //    CurrentPlayer.CurrentScene.SceneObject = null;
+    //}
 
 
     public static void MakeScenes()
-    {
-        //change canvas for swapping to inventory/map    
-        Scene christChurchSteps = new Scene();
-        Scene starbucks = new Scene();
-        Scene NMIT = new Scene();
-        Scene newWorld = new Scene();
-        Scene stateCinemas = new Scene();
+    { 
+        //InstantiateScenes   
+        Scene scnTownCenter = new Scene();
+        Scene scnTavern = new Scene();
+        Scene scnFootOfMountain = new Scene();
+        Scene scnHalfUpMountain = new Scene();
+        Scene scnTopOfMountain = new Scene();
 
-        //sets the current scene to the beginning scene upon scene creation.
-        _player.CurrentScene = christChurchSteps;
 
-        //Christ Church Steps (Start Scene)
-        christChurchSteps.LstGame.Add("You wake up on some stone steps in Nelson, you appear to be on the main street. Enter 'go north' to continue.");
-        christChurchSteps.North = starbucks;
-        christChurchSteps.South = null;
-        christChurchSteps.West = null;
-        christChurchSteps.East = null;
 
-        //starbucks
-        //need to code what happens on decision that then also changes the text for this scene
-        //for the rest of the game
-        starbucks.SceneObject = new Item
-        {
-            Description = "$5"
-        };
-        starbucks.LstGame.Add("Yup that's starbucks.");
-        starbucks.LstGame.Add("You pick up the moneys, another day another dolla. Where to go from here?");
-        starbucks.LstGame.Add("You arrive at starbucks, you see $5 on the ground. Type 'pick up' to pick it up.");
-        starbucks.North = stateCinemas;
-        starbucks.South = christChurchSteps;
-        starbucks.East = newWorld;
-        starbucks.West = NMIT;
+        //Town Center (Starting Scene)
+        scnTownCenter.LstStoryText.Add("You are standing in the Town Center.");
+        scnTownCenter.LstStoryText.Add("To your South is the Tavern");
+        scnTownCenter.LstStoryText.Add("To your West is the foot of the mountain");
+        scnTownCenter.North = null;
+        scnTownCenter.South = scnTavern;
+        scnTownCenter.West = scnFootOfMountain;
+        scnTownCenter.East = null;
 
-        //NMIT
-        NMIT.LstGame.Add("You walk onto the local polytech ground, searching for someone who might know now to escape this damn city." + "/n" + "Someone approaches you and asks" +
-                            "you want to do their SYD survey, do you want to do it? yes/no");
-        NMIT.LstGame.Add("The student is grateful and gives you a free coffee voucher in return!");
-        NMIT.LstGame.Add("You politely decline and realize nobody helpful is here, where to next?");
-        NMIT.North = null;
-        NMIT.South = null;
-        NMIT.East = starbucks;
-        NMIT.West = null;
+        //Tavern
+        scnTavern.LstSceneObjects.Add(new Item {Description = "Gold Coin" });
+        scnTavern.LstStoryText.Add("You are in the Tavern.  you see a gold coin on the ground. Type 'pick up' to pick it up.");
+        scnTavern.LstStoryText.Add("YOu return to the Tavern.");
+        scnTavern.North = scnTownCenter;
+        scnTavern.South = null;
+        scnTavern.East = null;
+        scnTavern.West = null;
 
-        //newWorld
-        newWorld.SceneObject = new Item
-        {
-            Description = "Flute"
-        };
-        newWorld.LstGame.Add("Yup that's new world.");
-        newWorld.LstGame.Add("you picked up the flute, you absolute madman, lets get out of here!!");
-        newWorld.LstGame.Add("new world, wow look there's a flute on the ground, enter 'pick up' to pick it up hahahaha");
-        newWorld.North = null;
-        newWorld.South = null;
-        newWorld.East = null;
-        newWorld.West = starbucks;
+        //scnFootOfMountain
+        scnFootOfMountain.LstStoryText.Add("You are at the foot of the mountain");
+        scnFootOfMountain.LstStoryText.Add("");
+        scnFootOfMountain.LstStoryText.Add("");
+        scnFootOfMountain.North = null;
+        scnFootOfMountain.South = null;
+        scnFootOfMountain.East = null;
+        scnFootOfMountain.West = null;
 
-        //stateCinemas
-        stateCinemas.LstGame.Add("cinemas, they're selling popcorn, do you want to buy? Enter y/n.");
-        stateCinemas.North = null;
-        stateCinemas.South = starbucks;
-        stateCinemas.East = null;
-        stateCinemas.West = null;
+        //scnHalfUpMountain
 
-        //      Scene tmp; 
+        scnHalfUpMountain.LstStoryText.Add("");
+        scnHalfUpMountain.North = null;
+        scnHalfUpMountain.South = null;
+        scnHalfUpMountain.East = null;
+        scnHalfUpMountain.West = null;
 
-        //Start_scene = new Scene();
-        //      tmp = new Scene();
+        //scnTopOfMountain
+        scnTopOfMountain.LstStoryText.Add("");
+        scnTopOfMountain.North = null;
+        scnTopOfMountain.South = null;
+        scnTopOfMountain.East = null;
+        scnTopOfMountain.West = null;
 
-        //Start_scene.North = tmp;
-        //Start_scene.Description = " You are lost in a forest" ;
 
-        //tmp.Description = " You are in the Mall" ;
-        //tmp.South = Start_scene;
-        //tmp.North = new Scene ();
-
-        //tmp.North.Description = "You fell off a clift";
-        //tmp.North.South = tmp;// ??
-
-        //currentPlayer.CurrentScene = Start_scene;
-
+        //Starts player in initial scene
+        _player.CurrentScene = scnTownCenter;
     }
 }
 

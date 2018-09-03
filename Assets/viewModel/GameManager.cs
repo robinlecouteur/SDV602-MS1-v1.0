@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
         if (Canvases == null)
         {
             Canvases = new Dictionary<string, Canvas>();
-            Canvases["cnvStory"] = cnvGame;
+            Canvases["cnvGame"] = cnvGame;
             Canvases["cnvInventory"] = cnvInventory;
             Canvases["cnvMap"] = cnvMap;
         }

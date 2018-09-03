@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Scene
 {
-    public Scene() {}
+    public Scene()
+    {
+        TimesVisited = 0;
+    }
     private Players _players = new Players();
     private Scene[] _connected_scenes = new Scene[4];
+  
+    private List<string> lstStoryText = new List<string>();
+    private List<Item> _lstSceneObjects = new List<Item>();
 
-    private List<string> lstStory = new List<string>();
-    private Item _sceneObject;
+    private int _timesVisited;
 
 
 
@@ -63,32 +68,42 @@ public class Scene
 
 
 
-    public List<string> LstGame
+    public List<string> LstStoryText
     {
         get
         {
-            return lstStory;
+            return lstStoryText;
         }
 
         set
         {
-            lstStory = value;
+            lstStoryText = value;
         }
     }
 
-    public Item SceneObject
+    public List<Item> LstSceneObjects
     {
         get
         {
-            return _sceneObject;
+            return _lstSceneObjects;
         }
 
         set
         {
-            _sceneObject = value;
+            _lstSceneObjects = value;
         }
     }
 
-   
+    public int TimesVisited
+    {
+        get
+        {
+            return _timesVisited;
+        }
 
+        set
+        {
+            _timesVisited = value;
+        }
+    }
 }

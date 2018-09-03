@@ -11,7 +11,7 @@ public class Player
     private string _name;
     private List<Item> _lstInventory = new List<Item>();   
     private Scene _currentScene;
-    private Boolean caffeinated = false;
+    private Boolean _drunk = false;
 
 
     public Scene CurrentScene
@@ -37,16 +37,16 @@ public class Player
         }
     }
 
-    public bool Caffeinated
+    public bool Drunk
     {
         get
         {
-            return caffeinated;
+            return _drunk;
         }
 
         set
         {
-            caffeinated = value;
+            _drunk = value;
         }
     }
 
