@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 using System.IO;
 using System.Text;
+using Assets.model;
+using Assets.model.Scenes;
 
 public class GameModel
 {
@@ -50,59 +52,59 @@ public class GameModel
     public static void MakeScenes()
     { 
         //InstantiateScenes   
-        Scene scnTownCenter = new Scene();
-        Scene scnTavern = new Scene();
-        Scene scnFootOfMountain = new Scene();
-        Scene scnHalfUpMountain = new Scene();
-        Scene scnTopOfMountain = new Scene();
+        Area areaTownCenter = new AreaTownCenter();
+        Area areaTavern = new AreaTavern();
+        Area areaFootOfMountain = new AreaFootOfMountain();
+        Area areaHalfUpMountain = new AreaHalfUpMountain();
+        Area areaTopOfMountain = new AreaTopOfMountain();
 
 
 
         //Town Center (Starting Scene)
-        scnTownCenter.LstStoryText.Add("You are standing in the Town Center.");
-        scnTownCenter.LstStoryText.Add("To your South is the Tavern");
-        scnTownCenter.LstStoryText.Add("To your West is the foot of the mountain");
-        scnTownCenter.North = null;
-        scnTownCenter.South = scnTavern;
-        scnTownCenter.West = scnFootOfMountain;
-        scnTownCenter.East = null;
+
+        //areaTownCenter.LstActions.Add(new GameAction(areaTownCenter) { Obj1 = areaTownCenter.TimesVisited, Obj2 = 1, Operator = ">=", ActionType = "ShowText", Text = "If this case worked it will only show the the first time you arrive here." });
+        // areaTownCenter.LstStoryText.Add("Town Center");
+        //areaTownCenter.LstStoryText.Add("To your South is the Tavern");
+        //areaTownCenter.LstStoryText.Add("To your West is the foot of the mountain");
+        areaTownCenter.North = null;
+        areaTownCenter.South = areaTavern;
+        areaTownCenter.West = areaFootOfMountain;
+        areaTownCenter.East = null;
 
         //Tavern
-        scnTavern.LstSceneObjects.Add(new Item {Description = "Gold Coin" });
-        scnTavern.LstStoryText.Add("You are in the Tavern.  you see a gold coin on the ground. Type 'pick up' to pick it up.");
-        scnTavern.LstStoryText.Add("YOu return to the Tavern.");
-        scnTavern.North = scnTownCenter;
-        scnTavern.South = null;
-        scnTavern.East = null;
-        scnTavern.West = null;
+        //areaTavern.LstSceneObjects.Add(new Item {Description = "Gold Coin" });
+        //areaTavern.LstStoryText.Add("You are in the Tavern.  you see a gold coin on the ground. Type 'pick up' to pick it up.");
+        //areaTavern.LstStoryText.Add("YOu return to the Tavern.");
+        areaTavern.North = areaTownCenter;
+        areaTavern.South = areaFootOfMountain;
+        areaTavern.East = null;
+        areaTavern.West = null;
 
-        //scnFootOfMountain
-        scnFootOfMountain.LstStoryText.Add("You are at the foot of the mountain");
-        scnFootOfMountain.LstStoryText.Add("");
-        scnFootOfMountain.LstStoryText.Add("");
-        scnFootOfMountain.North = null;
-        scnFootOfMountain.South = null;
-        scnFootOfMountain.East = null;
-        scnFootOfMountain.West = null;
+        //areaFootOfMountain
+        //areaFootOfMountain.LstStoryText.Add("You are at the foot of the mountain");
+        areaFootOfMountain.North = areaTavern;
+        areaFootOfMountain.South = null;
+        areaFootOfMountain.East = null;
+        areaFootOfMountain.West = null;
 
-        //scnHalfUpMountain
+        //areaHalfUpMountain
 
-        scnHalfUpMountain.LstStoryText.Add("");
-        scnHalfUpMountain.North = null;
-        scnHalfUpMountain.South = null;
-        scnHalfUpMountain.East = null;
-        scnHalfUpMountain.West = null;
+        //areaHalfUpMountain.LstStoryText.Add("");
+        areaHalfUpMountain.North = null;
+        areaHalfUpMountain.South = null;
+        areaHalfUpMountain.East = null;
+        areaHalfUpMountain.West = null;
 
-        //scnTopOfMountain
-        scnTopOfMountain.LstStoryText.Add("");
-        scnTopOfMountain.North = null;
-        scnTopOfMountain.South = null;
-        scnTopOfMountain.East = null;
-        scnTopOfMountain.West = null;
+        //areaTopOfMountain
+        //areaTopOfMountain.LstStoryText.Add("");
+        areaTopOfMountain.North = null;
+        areaTopOfMountain.South = null;
+        areaTopOfMountain.East = null;
+        areaTopOfMountain.West = null;
 
 
         //Starts player in initial scene
-        _player.CurrentScene = scnTownCenter;
+        _player.CurrentArea = areaTownCenter;
     }
 }
 

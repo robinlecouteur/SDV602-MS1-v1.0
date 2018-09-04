@@ -10,11 +10,11 @@ public class Player
     private int _number = (Player._player_number++);
     private string _name = "Robin(Default)";
     private List<Item> _lstInventory = new List<Item>();   
-    private Scene _currentScene;
+    private Area _currentScene;
     private Boolean _drunk = false;
 
 
-    public Scene CurrentScene
+    public Area CurrentArea
     {
         get
         {

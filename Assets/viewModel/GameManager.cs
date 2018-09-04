@@ -42,8 +42,8 @@ public class GameManager : MonoBehaviour
             // set all to not active;
             foreach (Canvas acanvas in Canvases.Values)
             {
-                acanvas.gameObject.SetActive(false);
-            }
+                    acanvas.gameObject.SetActive(false);
+                }
             activeCanvas = Canvases[prName];
             Debug.Log("I am the active one " + prName);
             activeCanvas.gameObject.SetActive(true);

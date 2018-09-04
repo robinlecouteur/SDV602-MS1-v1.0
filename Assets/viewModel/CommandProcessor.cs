@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 using System.IO;
 
 public delegate void aDisplayer(String value);
@@ -20,6 +19,7 @@ public class CommandProcessor
         //List index[1] = text after SceneObject is picked up
         //List index[2] = text if a SceneObject is present
         String strResult = "Do not understand";
+        Area lcCurrentArea = GameModel.CurrentPlayer.CurrentArea;
 
         char[] charSeparators = new char[] { ' ' };
         pCmdStr = pCmdStr.ToLower();
@@ -55,56 +55,41 @@ public class CommandProcessor
                 //    display(strResult);
                 //    break;
                 case "go":
+                    GameModel.DIRECTION lcDirection;
                     switch (parts[1])
                     {
                         case "north":
                             Debug.Log("Got go North");
-                            GameModel.go(GameModel.DIRECTION.North);
-                            if (GameModel.CurrentPlayer.CurrentScene.TimesVisited == 0)
-                            {
-                                strResult = GameModel.CurrentPlayer.CurrentScene.LstStoryText[0];
-                            }
-                            else
-                            {
-                                strResult = GameModel.CurrentPlayer.CurrentScene.LstStoryText[2];
-                            }
+                            lcDirection = GameModel.DIRECTION.North;
+                            GoDirection(lcCurrentArea, lcDirection);
+
+                            strResult = Arrive(lcCurrentArea, strResult);
                             break;
+
                         case "south":
                             Debug.Log("Got go South");
-                            GameModel.go(GameModel.DIRECTION.South);
-                            if (GameModel.CurrentPlayer.CurrentScene.TimesVisited == 0)
-                            {
-                                strResult = GameModel.CurrentPlayer.CurrentScene.LstStoryText[0];
-                            }
-                            else
-                            {
-                                strResult = GameModel.CurrentPlayer.CurrentScene.LstStoryText[2];
-                            }
+                            lcDirection = GameModel.DIRECTION.South;
+                            GoDirection(lcCurrentArea, lcDirection);
+
+                            strResult = Arrive(lcCurrentArea, strResult);
                             break;
+
                         case "east":
                             Debug.Log("Got go East");
-                            GameModel.go(GameModel.DIRECTION.East);
-                            if (GameModel.CurrentPlayer.CurrentScene.TimesVisited == 0)
-                            {
-                                strResult = GameModel.CurrentPlayer.CurrentScene.LstStoryText[0];
-                            }
-                            else
-                            {
-                                strResult = GameModel.CurrentPlayer.CurrentScene.LstStoryText[2];
-                            }
+                            lcDirection = GameModel.DIRECTION.East;
+                            GoDirection(lcCurrentArea, lcDirection);
+
+                            strResult = Arrive(lcCurrentArea, strResult);
                             break;
+
                         case "west":
                             Debug.Log("Got go West");
-                            GameModel.go(GameModel.DIRECTION.West);
-                            if (GameModel.CurrentPlayer.CurrentScene.TimesVisited == 0)
-                            {
-                                strResult = GameModel.CurrentPlayer.CurrentScene.LstStoryText[0];
-                            }
-                            else
-                            {
-                                strResult = GameModel.CurrentPlayer.CurrentScene.LstStoryText[2];
-                            }
+                            lcDirection = GameModel.DIRECTION.West;
+                            GoDirection(lcCurrentArea, lcDirection);
+
+                            strResult = Arrive(lcCurrentArea, strResult);
                             break;
+
                         default:
                             Debug.Log(" do not know how to go there");
                             strResult = "Do not know how to go there";
@@ -137,7 +122,9 @@ public class CommandProcessor
 
                     //if (GameManager.instance.activeCanvas == cnvGame)
 
+                    
                     display(strResult);
+                    
                     break;
                 default:
                     Debug.Log("Do not understand");
@@ -149,6 +136,23 @@ public class CommandProcessor
         // return strResult;
 
     }// Parse
+
+    private static string Arrive(Area lcCurrentArea,string strResult)
+    {
+        lcCurrentArea = GameModel.CurrentPlayer.CurrentArea;
+        lcCurrentArea.Arrive();
+        strResult = lcCurrentArea.StoryText;
+        return strResult;
+    }
+
+    private static void GoDirection(Area lcCurrentArea, GameModel.DIRECTION lcDirection)
+    {      
+        lcCurrentArea.Leave();
+        GameModel.go(lcDirection);
+    }
+
+
+
 }
 
 
