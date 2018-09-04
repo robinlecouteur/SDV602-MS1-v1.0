@@ -4,18 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 using System.IO;
-
-
-
 using System.Text;
 
 public class GameModel
 {
 
-    private static String _name;
     private static Player _player = new Player();
     public enum DIRECTION { North, South, East, West };
-    private static Scene _start_scene; // ??
+
     public static Players PlayersInGame = new Players();
 
     public GameModel()
@@ -23,33 +19,6 @@ public class GameModel
         MakeScenes();
     }
         
-
-    public static Scene Start_scene
-    {
-        get
-        {
-            return _start_scene;
-        }
-        set
-        {
-            _start_scene = value;
-        }
-
-    }
-
-    public static string Name
-    {
-        get
-        {
-            return _name;
-        }
-        set
-        {
-            _name = value;
-        }
-
-    }
-
     public static Player CurrentPlayer
     {
         get

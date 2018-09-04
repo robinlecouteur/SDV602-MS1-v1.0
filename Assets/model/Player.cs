@@ -8,7 +8,7 @@ public class Player
 
     // Instance
     private int _number = (Player._player_number++);
-    private string _name;
+    private string _name = "Robin(Default)";
     private List<Item> _lstInventory = new List<Item>();   
     private Scene _currentScene;
     private Boolean _drunk = false;
