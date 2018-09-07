@@ -11,10 +11,11 @@ using Assets.model.Items;
 
 public class GameModel
 {
-    public GameModel()
+    public GameModel() //Constructor
     {
         MakeAreas();
     }
+    
     private static Player _player = new Player();
     public enum DIRECTION { North, South, East, West };
     public static Players PlayersInGame = new Players(); 
@@ -40,11 +41,13 @@ public class GameModel
     }
     public static void Pickup(Item prItem)
     {
+        //Adds prItem to the inventory list of the current player
         CurrentPlayer.LstInventory.Add(prItem);
     }
 
     public static void RemoveItemFromArea(Item prItem)
     {
+        //Removes prItem from the list of items in the current area
         CurrentPlayer.CurrentArea.LstAreaItems.Remove(prItem);
     }
 
