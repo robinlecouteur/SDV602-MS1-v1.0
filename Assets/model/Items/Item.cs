@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.model.Items
+namespace Assets.Model.Items
 {
-    public class Item
+    [Serializable]
+    public class ClsItem
     {
-        public Item()
+        public ClsItem()
         {
         }
         private string _name;

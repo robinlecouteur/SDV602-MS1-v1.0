@@ -5,13 +5,13 @@ using UnityEngine;
 public class SetActiveCanvas : MonoBehaviour {
 
 	// Use this for initialization
-	void Start(){
+	void Start()
+    {
 		Canvas[] lcCanvases = gameObject.GetComponents<Canvas>();
 		Canvas lcCanvas = lcCanvases [0];
 		string lcName = lcCanvas.name;
-		if(GameManager.instance != null)
+		if(GameManager.Instance != null)
 		  // Do we need to check if we already have this name?
-		  GameManager.instance.setActiveCanvas (lcName);
-
+		  GameManager.Instance.SetActiveCanvas (lcName);
 	}
 }

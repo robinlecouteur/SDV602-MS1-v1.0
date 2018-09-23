@@ -1,4 +1,4 @@
-﻿using Assets.model.Items;
+﻿using Assets.Model.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +14,9 @@ public class inventoryOutput : MonoBehaviour
         output.text = null;
         output.text = "* INVENTORY * \n \n";
 
-        if (GameModel.CurrentPlayer.LstInventory != null)
+        if (GameManager.Instance.GameModel.CurrentPlayer.LstInventory != null)
         {        
-            foreach (Item prItem in GameModel.CurrentPlayer.LstInventory)
+            foreach (ClsItem prItem in GameManager.Instance.GameModel.CurrentPlayer.LstInventory)
             {
                 output.text = output.text + "\n" + prItem.Name;
             }

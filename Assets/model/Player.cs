@@ -1,37 +1,40 @@
-﻿using Assets.model.Items;
+﻿using Assets.Model.Items;
 using System;
 using System.Collections.Generic;
 
-namespace Assets.model
+namespace Assets.Model
 {
 
-
-    public class Player
+    [Serializable]
+    public class ClsPlayer
     {
-        public Player() //Constructor
+        public ClsPlayer() //Constructor
         {
         }
 
         // Class
-        private static int _player_number = 0;
+        private static int _playerNum = 0;
 
         // Instance
-        private int _number = (Player._player_number++);
+        private int _number = (ClsPlayer._playerNum++);
         private string _name = "Robin(Default)";
-        private List<Item> _lstInventory = new List<Item>();   
-        private Area _currentScene;
+
+        private List<ClsItem> _lstInventory = new List<ClsItem>();   
+        private ClsArea _currentArea;
         private Boolean _drunk = false;
+        private int _experience = 0;
+        private int _health = 10;
 
         //Properties
-        public Area CurrentArea
+        public ClsArea CurrentArea
         {
             get
             {
-                return _currentScene;
+                return _currentArea;
             }
             set
             {
-                _currentScene = value;
+                _currentArea = value;
             }
         }
         public String Name
@@ -57,7 +60,7 @@ namespace Assets.model
                 _drunk = value;
             }
         }
-        public List<Item> LstInventory
+        public List<ClsItem> LstInventory
         {
             get
             {
@@ -72,38 +75,26 @@ namespace Assets.model
 
 
         //Methods
-        public void Move(GameModel.DIRECTION pDirection)
+        public void Move(string prDirection)
         {
-            switch (pDirection)
-            {
-                case GameModel.DIRECTION.North: // but what do we do??
 
-                    if (_currentScene.North != null)
-                    {
-                        _currentScene = _currentScene.North;
-                    }
-                    break;
-                case GameModel.DIRECTION.South:
-                    if (_currentScene.South != null)
-                    {
-                        _currentScene = _currentScene.South;
-                    }
-                    break;
-                case GameModel.DIRECTION.East:
-                    if (_currentScene.East != null)
-                    {
-                        _currentScene = _currentScene.East;
-                    }
-                    break;
-                case GameModel.DIRECTION.West:
-                    if (_currentScene.West != null)
-                    {
-                        _currentScene = _currentScene.West;
-                    }
-                    break;
+            foreach (Destination lcDestination in _currentArea.Destinations)
+            {
+                if (lcDestination.Direction == prDirection)
+                {
+                    _currentArea = lcDestination.TargetArea;
+                }
             }
         }
-        
+
+        public void AddExperience(int prXPtoAdd)
+        {
+            _experience += prXPtoAdd;
+        }
+        public void Die()
+        {
+            _health = 0;
+        }
     }
 }
 

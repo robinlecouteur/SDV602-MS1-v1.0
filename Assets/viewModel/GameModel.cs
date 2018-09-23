@@ -1,33 +1,35 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 using System.IO;
 using System.Text;
-using Assets.model;
-using Assets.model.Scenes;
-using Assets.model.Items;
+using Assets.Model;
+using Assets.Model.Areas;
+using Assets.Model.Items;
 
+[Serializable]
 public class GameModel
 {
+    //Areas
+    private Dictionary<string, ClsArea> _areas;
+   
+
+    private ClsPlayer _currentPlayer;
     public GameModel() //Constructor
     {
         MakeAreas();
     }
-    
-    private static Player _player = new Player();
-    public enum DIRECTION { North, South, East, West };
-    public static Players PlayersInGame = new Players(); 
-    public static Player CurrentPlayer
+
+    public ClsPlayers PlayersInGame = new ClsPlayers(); 
+    public ClsPlayer CurrentPlayer
     {
         get
         {
-            return _player;
+            return _currentPlayer;
         }
         set
         {
-            _player = value;
+            _currentPlayer = value;
         }
 
     }
@@ -35,67 +37,95 @@ public class GameModel
 
 
 
-    public static void go(DIRECTION pDirection)
-    {
-        _player.Move(pDirection);
-    }
-    public static void Pickup(Item prItem)
+    public void Pickup(ClsItem prItem)
     {
         //Adds prItem to the inventory list of the current player
         CurrentPlayer.LstInventory.Add(prItem);
     }
 
-    public static void RemoveItemFromArea(Item prItem)
+    public void RemoveItemFromArea(ClsItem prItem)
     {
         //Removes prItem from the list of items in the current area
         CurrentPlayer.CurrentArea.LstAreaItems.Remove(prItem);
     }
 
 
-    public static void MakeAreas()
+    public void MakeAreas()
     { 
         //Instantiate Areas  
-        Area areaTownCenter = new AreaTownCenter();
-        Area areaTavern = new AreaTavern();
-        Area areaFootOfMountain = new AreaFootOfMountain();
-        Area areaHalfUpMountain = new AreaHalfUpMountain();
-        Area areaTopOfMountain = new AreaTopOfMountain();
-
+        _areas.Add("TownCenter", new ClsAreaTownCenter());
+        _areas.Add("Tavern", new ClsAreaTavern());
+        _areas.Add("FootOfMountain", new ClsAreaFootOfMountain());
+        _areas.Add("HalfUpMountain", new ClsAreaHalfUpMountain());
+        _areas.Add("TopOfMountain", new ClsAreaTopOfMountain());
 
 
         //Town Center (Starting Area)
-        areaTownCenter.North = null;
-        areaTownCenter.South = areaTavern;
-        areaTownCenter.West = areaFootOfMountain;
-        areaTownCenter.East = null;
+        //_areas["TownCenter"].AddDestination("north", null);
+        _areas["TownCenter"].AddDestination("south", _areas["Tavern"]);
+        //_areas["TownCenter"].AddDestination("east", null);
+        //_areas["TownCenter"].AddDestination("west", null);
 
         //Tavern
-        areaTavern.North = areaTownCenter;
-        areaTavern.South = areaFootOfMountain;
-        areaTavern.East = null;
-        areaTavern.West = null;
+        _areas["Tavern"].AddDestination("north", _areas["TownCenter"]);
+        _areas["Tavern"].AddDestination("south", _areas["FootOfMountain"]);
+        //_areas["Tavern"].AddDestination("east", null);
+        //_areas["Tavern"].AddDestination("west", null);
 
         //areaFootOfMountain
-        areaFootOfMountain.North = areaTavern;
-        areaFootOfMountain.South = null;
-        areaFootOfMountain.East = null;
-        areaFootOfMountain.West = null;
+        _areas["FootOfMountain"].AddDestination("north", _areas["Tavern"]);
+        //_areas["FootOfMountain"].AddDestination("south", null);
+        //_areas["FootOfMountain"].AddDestination("east", null);
+        //_areas["FootOfMountain"].AddDestination("west", null);
+
 
         //areaHalfUpMountain
-        areaHalfUpMountain.North = null;
-        areaHalfUpMountain.South = null;
-        areaHalfUpMountain.East = null;
-        areaHalfUpMountain.West = null;
+        //_areas["HalfUpMountain"].AddDestination("north", null);
+        //_areas["HalfUpMountain"].AddDestination("south", null);
+        //_areas["HalfUpMountain"].AddDestination("east", null);
+        //_areas["HalfUpMountain"].AddDestination("west", null);
 
         //areaTopOfMountain
-        areaTopOfMountain.North = null;
-        areaTopOfMountain.South = null;
-        areaTopOfMountain.East = null;
-        areaTopOfMountain.West = null;
+        //_areas["TopOfMountain"].AddDestination("north", null);
+        //_areas["TopOfMountain"].AddDestination("south", null);
+        //_areas["TopOfMountain"].AddDestination("east", null);
+        //_areas["TopOfMountain"].AddDestination("west", null);
+
+
+
+        ////Town Center (Starting Area)
+        //areaTownCenter.Directions["north"] = null;
+        //areaTownCenter.Directions["south"] = areaTavern;
+        //areaTownCenter.Directions["west"] = areaFootOfMountain;
+        //areaTownCenter.Directions["east"] = null;
+
+        ////Tavern
+        //areaTavern.Directions["north"] = areaTownCenter;
+        //areaTavern.Directions["south"] = areaFootOfMountain;
+        //areaTavern.Directions["east"] = null;
+        //areaTavern.Directions["west"] = null;
+
+        ////areaFootOfMountain
+        //areaFootOfMountain.Directions["north"] = areaTavern;
+        //areaFootOfMountain.Directions["south"] = null;
+        //areaFootOfMountain.Directions["east"] = null;
+        //areaFootOfMountain.Directions["west"] = null;
+
+        ////areaHalfUpMountain
+        //areaHalfUpMountain.Directions["north"] = null;
+        //areaHalfUpMountain.Directions["south"] = null;
+        //areaHalfUpMountain.Directions["east"] = null;
+        //areaHalfUpMountain.Directions["west"] = null;
+
+        ////areaTopOfMountain
+        //areaTopOfMountain.Directions["north"] = null;
+        //areaTopOfMountain.Directions["south"] = null;
+        //areaTopOfMountain.Directions["east"] = null;
+        //areaTopOfMountain.Directions["west"] = null;//Old Area direction setting
 
 
         //Starts player in initial area
-        _player.CurrentArea = areaTownCenter;
+        _currentPlayer.CurrentArea = _areas["TownCenter"];
     }
 }
 

@@ -11,8 +11,8 @@ public class identifyCanvas : MonoBehaviour {
 		string lcName = lcCanvas.name;
 
 		// Do we ned to check if we already have this name?
-		if (GameManager.instance != null) {
-			GameManager.instance.Canvases.Add (lcName, lcCanvas);
+		if (GameManager.Instance != null) {
+			GameManager.Instance.Canvases.Add (lcName, lcCanvas);
 			Debug.Log ("I added a canvas " + lcName);
 		} else {
 			Debug.Log ("Canvas " + lcName + " not added");

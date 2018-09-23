@@ -8,16 +8,16 @@ using UManager = UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager instance; 
+    public static GameManager Instance; 
 
-    private bool gameRunning;
+    private bool GameRunning;
 
-    public GameModel gameModel;
+    public GameModel GameModel;
 
-    public Canvas activeCanvas;
-    public Canvas cnvGame;
-    public Canvas cnvInventory;
-    public Canvas cnvMap;
+    public Canvas ActiveCanvas;
+    public Canvas CnvGame;
+    public Canvas CnvInventory;
+    public Canvas CnvMap;
     private Dictionary<string, Canvas> canvases;
 
     public Dictionary<string, Canvas> Canvases
@@ -33,10 +33,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void setActiveCanvas(string prName)
+    public void SetActiveCanvas(string prCnvName)
     {
 
-        if (Canvases.ContainsKey(prName))
+        if (Canvases.ContainsKey(prCnvName))
         {
 
             // set all to not active;
@@ -44,43 +44,43 @@ public class GameManager : MonoBehaviour
             {
                     prCanvas.gameObject.SetActive(false);
                 }
-            activeCanvas = Canvases[prName];
-            Debug.Log("I am the active one " + prName);
-            activeCanvas.gameObject.SetActive(true);
+            ActiveCanvas = Canvases[prCnvName];
+            Debug.Log("I am the active one " + prCnvName);
+            ActiveCanvas.gameObject.SetActive(true);
         }
         else
         {
-            Debug.Log("I can not find " + prName + " to make active.");
+            Debug.Log("I can not find " + prCnvName + " to make active.");
         }
 
         Canvas[] tempCanvases = gameObject.GetComponentsInChildren<Canvas>();
 
         foreach (Canvas prCanvase in tempCanvases)
         {
-            if (prCanvase.name != prName)
+            if (prCanvase.name != prCnvName)
             {
                 prCanvase.gameObject.SetActive(false);
             }
         }
     }
-    public string currentUScene()
+    public string CurrentUScene()
     {
         return UManager.SceneManager.GetActiveScene().name;
     }
 
-    public void changeUScene(string pSceneName)
+    public void ChangeScene(string prSceneName)
     {
-        UManager.SceneManager.LoadScene(pSceneName);
+        UManager.SceneManager.LoadScene(prSceneName);
     }
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
-            gameRunning = true;
+            Instance = this;
+            GameRunning = true;
             Debug.Log("I am the one");
-            gameModel = new GameModel();
+            GameModel = new GameModel();
         }
         else
         {
@@ -90,15 +90,15 @@ public class GameManager : MonoBehaviour
         if (Canvases == null)
         {
             Canvases = new Dictionary<string, Canvas>();
-            Canvases["cnvGame"] = cnvGame;
-            Canvases["cnvMap"] = cnvMap;
-            Canvases["cnvInventory"] = cnvInventory;
+            Canvases["cnvGame"] = CnvGame;
+            Canvases["cnvMap"] = CnvMap;
+            Canvases["cnvInventory"] = CnvInventory;
             
         }
     }
 
     public bool IsGameRunning()
     {
-        return gameRunning;
+        return GameRunning;
     }
 }

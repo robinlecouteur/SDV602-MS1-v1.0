@@ -1,14 +1,15 @@
-﻿using Assets.model;
-using Assets.model.Items;
+﻿using Assets.Model;
+using Assets.Model.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Area
+[Serializable]
+public abstract class ClsArea
 {
-    public Area()
+    public ClsArea()
     {
-        TimesVisited = 0;
+        _timesVisited = 0;
     }
 
     //------------------------------------------------------------------- VARIABLES ---------------------------------------------------------------------//
@@ -16,13 +17,15 @@ public class Area
     //                                                                                                                                                   //
 
     //### Declare Vars ###
-    protected Players _players = new Players();     //stores what players are currently in the area?
-    protected Area[] _connectedAreas = new Area[4]; //Stores a list of areas that are connected to this area
+
+    //protected ClsPlayers _players = new ClsPlayers();     //stores what players are currently in the area?
+
+    private List<Destination> _destinations = new List<Destination>(); //Stores a list of areas that are connected to this area
     protected string _areaName = "areaName placeholder";    //Stores the name of the area  
     protected Dictionary<string, string> _dictAreaText   //Dictionary containing different lines of text
         = new Dictionary<string, string>();              //These lines of text can be added to the _areaText depending on conditions
     protected string _areaText = "";    //Stores the text that will be displayed for this area
-    protected List<Item> _lstAreaItems = new List<Item>();
+    protected List<ClsItem> _lstAreaItems = new List<ClsItem>();
     //?? //protected Dictionary<string, Item> _dictAreaItems = new Dictionary<string, Item>(); //Stores a list of items that are in the area
     protected int _timesVisited;
     protected bool _hasBeenVisited;
@@ -30,55 +33,7 @@ public class Area
     //###---
 
 
-    //### Properties ###
-    
-    //   *** Properties for each direction ***//
-    public Area North
-    {
-        get
-        {
-            return _connectedAreas[(int)GameModel.DIRECTION.North];
-        }
-        set
-        {
-            _connectedAreas[(int)GameModel.DIRECTION.North] = value;
-        }
-    }
-    public Area South
-    {
-        get
-        {
-            return _connectedAreas[(int)GameModel.DIRECTION.South];
-        }
-        set
-        {
-            _connectedAreas[(int)GameModel.DIRECTION.South] = value;
-        }
-    }   
-    public Area East
-    {
-        get
-        {
-            return _connectedAreas[(int)GameModel.DIRECTION.East];
-        }
-        set
-        {
-            _connectedAreas[(int)GameModel.DIRECTION.East] = value;
-        }
-    }
-    public Area West
-    {
-        get
-        {
-            return _connectedAreas[(int)GameModel.DIRECTION.West];
-        }
-        set
-        {
-            _connectedAreas[(int)GameModel.DIRECTION.West] = value;
-        }
-    }
-    //   ***   ***   ***   ***   ***   ***   *//
-
+    //### Properties ### 
     public Dictionary<string, string> DictAreaText
     {
         get
@@ -91,7 +46,7 @@ public class Area
             _dictAreaText = value;
         }
     }
-    public List<Item> LstAreaItems
+    public List<ClsItem> LstAreaItems
     {
         get
         {
@@ -115,17 +70,17 @@ public class Area
             _timesVisited = value;
         }
     }
-    public string Directions
+    public string DestinationText
     {
         get
         {
-            string lcDirections = "\n \n This is where you can go from here: \n";
-            if (North != null){ lcDirections +=  "   North: " + North.AreaName + "\n"; }
-            if (South != null) { lcDirections += "   South: " + South.AreaName + "\n"; }
-            if (East != null) { lcDirections +=  "   East:  " + East.AreaName + "\n"; }
-            if (West != null) { lcDirections +=  "   West:  " + West.AreaName + "\n"; }
+            string lcDestText = "\n \n This is where you can go from here: \n";
+            foreach (Destination lcDestination in _destinations)
+            {
+                lcDestText +=  "   " + lcDestination.Direction + "  " + lcDestination.TargetArea.AreaName + "\n";
+            } 
 
-            return lcDirections;
+            return lcDestText;
         }
     }
     public string AreaText
@@ -152,6 +107,20 @@ public class Area
             _areaName = value;
         }
     }
+
+    public List<Destination> Destinations
+    {
+        get
+        {
+            return _destinations;
+        }
+
+        set
+        {
+            _destinations = value;
+        }
+    }
+
     //###---
 
     //                                                                                                                                                   //
@@ -163,17 +132,22 @@ public class Area
     //------------------------------------------------------------------ METHODS ------------------------------------------------------------------------//
     //                                                                                                                                                   //
     //                                                                                                                                                   //
-    public virtual void Arrive()
+    public virtual void Arrive(ClsPlayer prPlayer)
     {
         AreaText += DictAreaText["DefaultText"];
-        AreaText += Directions;
+        AreaText += DestinationText;
     }
 
-    public virtual void Leave()
+    public virtual void Leave(ClsPlayer prPlayer)
     {
         _timesVisited += 1;
         _areaText = "";
     }  
+
+    public virtual void AddDestination(string prDirection, ClsArea prDestination)
+    {
+        _destinations.Add(new Destination() { Direction = prDirection, TargetArea = prDestination });
+    }
     //                                                                                                                                                   //
     //                                                                                                                                                   //
     //---------------------------------------------------------------------------------------------------------------------------------------------------//

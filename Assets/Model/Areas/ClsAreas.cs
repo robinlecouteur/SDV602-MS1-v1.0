@@ -1,20 +1,39 @@
-﻿using Assets.model.Items;
+﻿using Assets.Model.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.model.Scenes
+namespace Assets.Model.Areas
 {
+    //------------------------------------------------------------------- Cliff -------------------------------------------------------------------------//
+    //                                                                                                                                                   //
+    [Serializable]
+    public class ClsAreaCliff : ClsArea
+    {
+        public ClsAreaCliff()
+        {
+            _areaName = "Cliff";
+            _dictAreaText.Add("DefaultText", "You fell off the cliff!");
+        }
 
+        public override void Arrive(ClsPlayer prPlayer)
+        {
+            _areaText += _dictAreaText["DefaultText"];
+        }
+    }
+    
+    //                                                                                                                                                   //
+    //---------------------------------------------------------------------------------------------------------------------------------------------------//
 
 
 
     //---------------------------------------------------------------- Town Center ----------------------------------------------------------------------//
     //                                                                                                                                                   //
-    public class AreaTownCenter : Area
+    [Serializable]
+    public class ClsAreaTownCenter : ClsArea
     {     
-        public AreaTownCenter()
+        public ClsAreaTownCenter()
         {
             _areaName = "Town Center";         
             _dictAreaText.Add("DefaultText", "Town Center");
@@ -28,12 +47,14 @@ namespace Assets.model.Scenes
 
     //------------------------------------------------------------------ Tavern -------------------------------------------------------------------------//
     //                                                                                                                                                   //
-    public class AreaTavern : Area
+
+    [Serializable]
+    public class ClsAreaTavern : ClsArea
     {
-        public AreaTavern()
+        public ClsAreaTavern()
         {
             _areaName = "Tavern";
-            _lstAreaItems.Add(new Item {Name = "goldcoin", Description = "A shiny gold coin", TextOnPickup  = "You quickly pocket the coin of precious gold" });
+            _lstAreaItems.Add(new ClsItem {Name = "goldcoin", Description = "A shiny gold coin", TextOnPickup  = "You quickly pocket the coin of precious gold" });
 
             //*** Add Text ***//
             _dictAreaText.Add("DefaultText", "You arrive at the Tavern.");
@@ -42,7 +63,7 @@ namespace Assets.model.Scenes
             //***   ***   *** //
         }
 
-        public override void Arrive()
+        public override void Arrive(ClsPlayer prPlayer)
         {
             if (_timesVisited == 0)
             { _areaText += _dictAreaText["DefaultText"] + "\n"; }
@@ -51,13 +72,13 @@ namespace Assets.model.Scenes
 
 
 
-            foreach (Item prItem in _lstAreaItems)
+            foreach (ClsItem prItem in _lstAreaItems)
             {
                 if (prItem.Name == "goldcoin") { _areaText += _dictAreaText["GoldCoinText"] + "\n";}
             }
 
 
-            _areaText += Directions;
+            _areaText += DestinationText;
         }
     }
     //                                                                                                                                                   //
@@ -68,9 +89,11 @@ namespace Assets.model.Scenes
 
     //-------------------------------------------------------------- Foot of Mountain -------------------------------------------------------------------//
     //                                                                                                                                                   //
-    public class AreaFootOfMountain : Area
+
+    [Serializable]
+    public class ClsAreaFootOfMountain : ClsArea
     {
-        public AreaFootOfMountain()
+        public ClsAreaFootOfMountain()
         {
             _areaName = "Foot of the mountain";
             _dictAreaText.Add("DefaultText", "You are at the foot of the mountain");
@@ -84,9 +107,11 @@ namespace Assets.model.Scenes
 
     //------------------------------------------------------------- Half Up Mountain --------------------------------------------------------------------//
     //                                                                                                                                                   //
-    public class AreaHalfUpMountain : Area
+
+    [Serializable]
+    public class ClsAreaHalfUpMountain : ClsArea
     {
-        public AreaHalfUpMountain()
+        public ClsAreaHalfUpMountain()
         {
             _areaName = "Half way up the Mountain";
             _dictAreaText.Add("DefaultText", "Halfway up the mountain");
@@ -100,9 +125,11 @@ namespace Assets.model.Scenes
 
     //-------------------------------------------------------------- Top of Mountain --------------------------------------------------------------------//
     //                                                                                                                                                   //
-    public class AreaTopOfMountain : Area
+
+    [Serializable]
+    public class ClsAreaTopOfMountain : ClsArea
     {
-        public AreaTopOfMountain()
+        public ClsAreaTopOfMountain()
         {
             _areaName = "Top of the Mountain";
             _dictAreaText.Add("DefaultText", "Top of the mountain");

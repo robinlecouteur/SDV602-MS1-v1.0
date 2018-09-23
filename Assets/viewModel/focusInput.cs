@@ -10,6 +10,4 @@ public class focusInput : MonoBehaviour {
 		InputField focusMe = gameObject.GetComponent<InputField> ();
 		focusMe.ActivateInputField ();
 	}
-	
-
 }

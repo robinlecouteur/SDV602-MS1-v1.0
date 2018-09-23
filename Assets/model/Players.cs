@@ -1,27 +1,28 @@
-﻿using Assets.model;
+﻿using Assets.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
 using System.IO;
 
-	public class Players
-	{
-	   private List<Player> _players = new List<Player>();
+    [Serializable]
+    public class ClsPlayers
+    { 
+	   private List<ClsPlayer> _lstPlayers = new List<ClsPlayer>();
 
-	   public Player this[int index] 
+	   public ClsPlayer this[int index] 
 	   {
 			get
 			{ 
-				return  _players[index];
+				return  _lstPlayers[index];
 			} 
 			set
 			{
-				_players[index] = value;
+				_lstPlayers[index] = value;
 			}
 	    }
 
-	    public Players ()
+	    public ClsPlayers ()
 		{
 		
 		}
