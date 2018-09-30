@@ -3,7 +3,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Assets.model.Items;
 
 public delegate void aDisplayer(String value);
 
@@ -33,36 +32,28 @@ public class CommandProcessor
             // process the tokens
             switch (parts[0])
             {
-                case "pick":
-                    if (parts[1] == "up")
-                    {
-                        Debug.Log("Got Pick up");
-                        if (GameModel.CurrentPlayer.CurrentArea.LstAreaItems.Count != 0)
-                        {
-                            foreach (Item prItem in GameModel.CurrentPlayer.CurrentArea.LstAreaItems)
-                            {
-                                if (parts[2] == prItem.Name)
-                                {
-                                    GameModel.Pickup(prItem);
-                                    GameModel.RemoveItemFromArea(prItem);
-                                    strResult = prItem.TextOnPickup;
-                                    break;
-                                } 
-                            }
-                            
-                        }
-                        else
-                        {
-                            strResult = "There is nothing to pick up";
-                        }
+                //case "pick":
+                //    if (parts[1] == "up")
+                //    {
+                //        Debug.Log("Got Pick up");
+                //        if (GameModel.CurrentPlayer.CurrentScene.SceneObject != null)
+                //        {
+                //            strResult = GameModel.CurrentPlayer.CurrentScene.LstStoryText[1];
+                //            GameModel.Pickup(GameModel.CurrentPlayer.CurrentScene.SceneObject);
+                //            GameModel.RemoveItemFromScene(GameModel.CurrentPlayer.CurrentScene.SceneObject);
+                //        }
+                //        else
+                //        {
+                //            strResult = "There is nothing to pick up";
+                //        }
 
-                        if (parts.Length == 3)
-                        {
-                            String param = parts[2];
-                        }// do pick up command
-                    }
-                    display(strResult);
-                    break;
+                //        if (parts.Length == 3)
+                //        {
+                //            String param = parts[2];
+                //        }// do pick up command
+                //    }
+                //    display(strResult);
+                //    break;
                 case "go":
                     GameModel.DIRECTION lcDirection;
                     switch (parts[1])
@@ -150,7 +141,7 @@ public class CommandProcessor
     {
         lcCurrentArea = GameModel.CurrentPlayer.CurrentArea;
         lcCurrentArea.Arrive();
-        strResult = lcCurrentArea.AreaText;
+        strResult = lcCurrentArea.StoryText;
         return strResult;
     }
 

@@ -9,7 +9,7 @@ public class TextInput : MonoBehaviour {
 	public Text output;
 
 	public void TextUpdate(string aStr){
-		output.text += ("\n \n ---------------------------------------------------------------  \n" + aStr);
+		output.text = aStr;
 	}
 
 
@@ -24,9 +24,9 @@ public class TextInput : MonoBehaviour {
 		ce.AddListener(ChangeInput);
 		*/
 		input.onEndEdit = se;
-        GameModel.MakeAreas();
+        GameModel.MakeScenes();
         GameModel.CurrentPlayer.CurrentArea.Arrive();
-        output.text = GameModel.CurrentPlayer.CurrentArea.AreaText;
+        output.text = GameModel.CurrentPlayer.CurrentArea.StoryText;
 
         //input.onValueChanged = ce;
 

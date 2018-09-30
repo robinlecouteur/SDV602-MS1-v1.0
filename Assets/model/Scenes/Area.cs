@@ -1,5 +1,4 @@
 ﻿using Assets.model;
-using Assets.model.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,171 +9,168 @@ public class Area
     {
         TimesVisited = 0;
     }
+    protected Players _players = new Players();
+    protected Area[] _connected_scenes = new Area[4];
+    protected string _areaName = "areaName placeholder";
 
-    //------------------------------------------------------------------- VARIABLES ---------------------------------------------------------------------//
-    //                                                                                                                                                   //
-    //                                                                                                                                                   //
+    protected Dictionary<string, string> lstStoryText = new Dictionary<string, string>();
+    protected string _storyText = "";
 
-        //### Declare Vars ###
-            protected Players _players = new Players();     //stores what players are currently in the area?
-            protected Area[] _connectedAreas = new Area[4]; //Stores a list of areas that are connected to this area
-            protected string _areaName = "areaName placeholder";    //Stores the name of the area  
-            protected Dictionary<string, string> _dictAreaText   //Dictionary containing different lines of text
-                = new Dictionary<string, string>();              //These lines of text can be added to the _areaText depending on conditions
-            protected string _areaText = "";    //Stores the text that will be displayed for this area
-            protected List<Item> _lstAreaItems = new List<Item>();
-            //protected Dictionary<string, Item> _dictAreaItems = new Dictionary<string, Item>();//Stores a list of items that are in the area
-            protected int _timesVisited;
-            protected bool _hasBeenVisited;
-        //###---
+    protected List<Item> _lstSceneObjects = new List<Item>();
+    protected List<GameAction> _lstActions = new List<GameAction>();
+    protected int _timesVisited;
+    protected bool _hasBeenVisited;
 
 
-        //### Properties ###
-    
-            //*** Properties for each direction ***//
-            public Area North
-            {
-                get
-                {
-                    return _connectedAreas[(int)GameModel.DIRECTION.North];
-                }
-                set
-                {
-                    _connectedAreas[(int)GameModel.DIRECTION.North] = value;
-                }
-            }
-            public Area South
-            {
-                get
-                {
-                    return _connectedAreas[(int)GameModel.DIRECTION.South];
-                }
-                set
-                {
-                    _connectedAreas[(int)GameModel.DIRECTION.South] = value;
-                }
-            }   
-            public Area East
-            {
-                get
-                {
-                    return _connectedAreas[(int)GameModel.DIRECTION.East];
-                }
-                set
-                {
-                    _connectedAreas[(int)GameModel.DIRECTION.East] = value;
-                }
-            }
-            public Area West
-            {
-                get
-                {
-                    return _connectedAreas[(int)GameModel.DIRECTION.West];
-                }
-                set
-                {
-                    _connectedAreas[(int)GameModel.DIRECTION.West] = value;
-                }
-            }
-            //***   ***   ***   ***   ***   ***   *//
+    public Area North
+    {
+        get
+        {
+            return _connected_scenes[(int)GameModel.DIRECTION.North];
+        }
+        set
+        {
+            _connected_scenes[(int)GameModel.DIRECTION.North] = value;
+        }
+    }
+    public Area South
+    {
+        get
+        {
+            return _connected_scenes[(int)GameModel.DIRECTION.South];
+        }
+        set
+        {
+            _connected_scenes[(int)GameModel.DIRECTION.South] = value;
+        }
+    }
+    public Area East
+    {
+        get
+        {
+            return _connected_scenes[(int)GameModel.DIRECTION.East];
+        }
+        set
+        {
+            _connected_scenes[(int)GameModel.DIRECTION.East] = value;
+        }
+    }
+    public Area West
+    {
+        get
+        {
+            return _connected_scenes[(int)GameModel.DIRECTION.West];
+        }
+        set
+        {
+            _connected_scenes[(int)GameModel.DIRECTION.West] = value;
+        }
+    }
 
-            public Dictionary<string, string> DictAreaText
-            {
-                get
-                {
-                    return _dictAreaText;
-                }
+    public Dictionary<string, string> DictStoryText
+    {
+        get
+        {
+            return lstStoryText;
+        }
 
-                set
-                {
-                    _dictAreaText = value;
-                }
-            }
-            public List<Item> LstAreaItems
-            {
-                get
-                {
-                    return _lstAreaItems;
-                }
+        set
+        {
+            lstStoryText = value;
+        }
+    }
 
-                set
-                {
-                    _lstAreaItems = value;
-                }
-            }
-            public int TimesVisited
-            {
-                get
-                {
-                    return _timesVisited;
-                }
+    public List<Item> LstSceneObjects
+    {
+        get
+        {
+            return _lstSceneObjects;
+        }
 
-                set
-                {
-                    _timesVisited = value;
-                }
-            }
-            public string Directions
-            {
-                get
-                {
-                    string lcDirections = "\n \n This is where you can go from here: \n";
-                    if (North != null){ lcDirections +=  "   North: " + North.AreaName + "\n"; }
-                    if (South != null) { lcDirections += "   South: " + South.AreaName + "\n"; }
-                    if (East != null) { lcDirections +=  "   East:  " + East.AreaName + "\n"; }
-                    if (West != null) { lcDirections +=  "   West:  " + West.AreaName + "\n"; }
+        set
+        {
+            _lstSceneObjects = value;
+        }
+    }
 
-                    return lcDirections;
-                }
-            }
-            public string AreaText
-            {
-                get
-                {
-                    return _areaText;
-                }
+    public int TimesVisited
+    {
+        get
+        {
+            return _timesVisited;
+        }
 
-                set
-                {
-                    _areaText = value;
-                }
-            }
-            public string AreaName
-            {
-                get
-                {
-                    return _areaName;
-                }
+        set
+        {
+            _timesVisited = value;
+        }
+    }
 
-                set
-                {
-                    _areaName = value;
-                }
-            }
-        //###---
+    public List<GameAction> LstActions
+    {
+        get
+        {
+            return _lstActions;
+        }
 
-    //                                                                                                                                                   //
-    //                                                                                                                                                   //
-    //---------------------------------------------------------------------------------------------------------------------------------------------------//
+        set
+        {
+            _lstActions = value;
+        }
+    }
+
+    public string Directions
+    {
+        
+      
+        get
+        {
+            string lcDirections = "\n \n This is where you can go from here: \n";
+            if (North != null){ lcDirections +=  "   North: " + North.AreaName + "\n"; }
+            if (South != null) { lcDirections += "   South: " + South.AreaName + "\n"; }
+            if (East != null) { lcDirections +=  "   East:  " + East.AreaName + "\n"; }
+            if (West != null) { lcDirections +=  "   West:  " + West.AreaName + "\n"; }
 
 
-
-    //------------------------------------------------------------------ METHODS ------------------------------------------------------------------------//
-    //                                                                                                                                                   //
-    //                                                                                                                                                   //
+            return lcDirections;
+        }
+    }
     public virtual void Arrive()
     {
-        AreaText += DictAreaText["DefaultText"];
-        AreaText += Directions;
+        StoryText += DictStoryText["DefaultText"];
+        StoryText += Directions;
     }
 
     public virtual void Leave()
     {
         _timesVisited += 1;
-        _areaText = "";
-    }  
-    //                                                                                                                                                   //
-    //                                                                                                                                                   //
-    //---------------------------------------------------------------------------------------------------------------------------------------------------//
+        _storyText = "";
+    }
 
+    public string AreaName
+    {
+        get
+        {
+            return _areaName;
+        }
+
+        set
+        {
+            _areaName = value;
+        }
+    }
+
+    public string StoryText
+    {
+        get
+        {
+            return _storyText;
+        }
+
+        set
+        {
+            _storyText = value;
+        }
+    }
 }
+ 

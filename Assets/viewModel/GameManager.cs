@@ -8,7 +8,7 @@ using UManager = UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager instance; 
+    public static GameManager instance;
 
     private bool gameRunning;
 
@@ -40,9 +40,9 @@ public class GameManager : MonoBehaviour
         {
 
             // set all to not active;
-            foreach (Canvas prCanvas in Canvases.Values)
+            foreach (Canvas acanvas in Canvases.Values)
             {
-                    prCanvas.gameObject.SetActive(false);
+                    acanvas.gameObject.SetActive(false);
                 }
             activeCanvas = Canvases[prName];
             Debug.Log("I am the active one " + prName);
@@ -55,11 +55,11 @@ public class GameManager : MonoBehaviour
 
         Canvas[] tempCanvases = gameObject.GetComponentsInChildren<Canvas>();
 
-        foreach (Canvas prCanvase in tempCanvases)
+        foreach (Canvas aCvn in tempCanvases)
         {
-            if (prCanvase.name != prName)
+            if (aCvn.name != prName)
             {
-                prCanvase.gameObject.SetActive(false);
+                aCvn.gameObject.SetActive(false);
             }
         }
     }
@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
             gameRunning = true;
             Debug.Log("I am the one");
             gameModel = new GameModel();
+            //canvases = new Dictionary<string,Canvas> ();
         }
         else
         {
@@ -91,9 +92,8 @@ public class GameManager : MonoBehaviour
         {
             Canvases = new Dictionary<string, Canvas>();
             Canvases["cnvGame"] = cnvGame;
-            Canvases["cnvMap"] = cnvMap;
             Canvases["cnvInventory"] = cnvInventory;
-            
+            Canvases["cnvMap"] = cnvMap;
         }
     }
 
