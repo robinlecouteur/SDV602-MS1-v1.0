@@ -1,63 +1,113 @@
-﻿using System;
+﻿using Assets.model.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Assets.model.Scenes
 {
+
+
+
+
+    //---------------------------------------------------------------- Town Center ----------------------------------------------------------------------//
+    //                                                                                                                                                   //
     public class AreaTownCenter : Area
     {     
         public AreaTownCenter()
         {
-            _areaName = "Town Center";
-            //Town Center (Starting Scene)
-            //scnTownCenter.LstActions.Add(new GameAction(scnTownCenter) { Obj1 = scnTownCenter.TimesVisited, Obj2 = 1, Operator = ">=", ActionType = "ShowText", Text = "If this case worked it will only show the the first time you arrive here." });
-            DictStoryText.Add("DefaultText", "Town Center");
-            //scnTownCenter.LstStoryText.Add("To your South is the Tavern");
-            //scnTownCenter.LstStoryText.Add("To your West is the foot of the mountain");
+            _areaName = "Town Center";         
+            _dictAreaText.Add("DefaultText", "Town Center");
         }
     }
+    //                                                                                                                                                   //
+    //---------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+    //------------------------------------------------------------------ Tavern -------------------------------------------------------------------------//
+    //                                                                                                                                                   //
     public class AreaTavern : Area
     {
         public AreaTavern()
         {
             _areaName = "Tavern";
-            LstSceneObjects.Add(new Item { Description = "Gold Coin" });
-            DictStoryText.Add("DefaultText", "You are in the Tavern.  you see a gold coin on the ground. Type 'pick up' to pick it up.");
-            DictStoryText.Add("Returning Text", "You return to the Tavern.");
+            _lstAreaItems.Add(new Item {Name = "goldcoin", Description = "A shiny gold coin", TextOnPickup  = "You quickly pocket the coin of precious gold" });
+
+            //*** Add Text ***//
+            _dictAreaText.Add("DefaultText", "You arrive at the Tavern.");
+            _dictAreaText.Add("GoldCoinText", "you see a GoldCoin on the ground. Type 'pick up goldcoin' to pick it up.");
+            _dictAreaText.Add("ReturningText", "You return to the Tavern.");
+            //***   ***   *** //
         }
+
         public override void Arrive()
         {
             if (_timesVisited == 0)
-            { StoryText += DictStoryText["DefaultText"]; }
+            { _areaText += _dictAreaText["DefaultText"] + "\n"; }
             else if (_timesVisited >= 1)
-            { StoryText += DictStoryText["Returning Text"]; }
+            { _areaText += _dictAreaText["ReturningText"]; }
 
-            _storyText += Directions;
+
+
+            foreach (Item prItem in _lstAreaItems)
+            {
+                if (prItem.Name == "goldcoin") { _areaText += _dictAreaText["GoldCoinText"] + "\n";}
+            }
+
+
+            _areaText += Directions;
         }
     }
+    //                                                                                                                                                   //
+    //---------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+    //-------------------------------------------------------------- Foot of Mountain -------------------------------------------------------------------//
+    //                                                                                                                                                   //
     public class AreaFootOfMountain : Area
     {
         public AreaFootOfMountain()
         {
             _areaName = "Foot of the mountain";
-            DictStoryText.Add("DefaultText", "You are at the foot of the mountain");
+            _dictAreaText.Add("DefaultText", "You are at the foot of the mountain");
         }
     }
+    //                                                                                                                                                   //
+    //---------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+    //------------------------------------------------------------- Half Up Mountain --------------------------------------------------------------------//
+    //                                                                                                                                                   //
     public class AreaHalfUpMountain : Area
     {
         public AreaHalfUpMountain()
         {
             _areaName = "Half way up the Mountain";
-            DictStoryText.Add("DefaultText", "Halfway up the mountain");
+            _dictAreaText.Add("DefaultText", "Halfway up the mountain");
         }
     }
+    //                                                                                                                                                   //
+    //---------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+    //-------------------------------------------------------------- Top of Mountain --------------------------------------------------------------------//
+    //                                                                                                                                                   //
     public class AreaTopOfMountain : Area
     {
         public AreaTopOfMountain()
         {
             _areaName = "Top of the Mountain";
-            DictStoryText.Add("DefaultText", "Top of the mountain");
+            _dictAreaText.Add("DefaultText", "Top of the mountain");
         }
     }
+    //                                                                                                                                                   //
+    //---------------------------------------------------------------------------------------------------------------------------------------------------//
 }
